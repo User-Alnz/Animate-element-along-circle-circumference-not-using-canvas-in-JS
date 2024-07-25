@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+
+            body{
+                background-color: #1C2833;
+            }
+            .container{
+                display: flex;
+                height: 100vh;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+            #Box{
+                position: relative;
+                height: 500px;
+                width: 500px;
+                background-color: slategray;
+            }
+            #moving_element{
+                position: absolute;
+                height: 20px;
+                width: 20px;
+                background-color: blue;
+                border-radius: 50px;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div class="container">
+
+            <div id="Box">
+                 <div id ="moving_element"></div>
+            </div>
+                        
+        </div>
+    </body>
+       
+        <script>
+            const box = document.getElementById("Box");
+            const element_to_animate = document.getElementById("moving_element");
+
+            var radius;
+            let angle;
+            let draw_full_circle;
+            const circle_center_Y = box.clientHeight/2;
+            const circle_center_X = box.clientWidth/2; 
+
+            radius = 150;
+            angle = 0;
+            draw_full_circle = false;
+
+            function ft_set_Point_along_circumference ()
+            {
+                draw_full_circle = requestAnimationFrame(ft_set_Point_along_circumference);
+
+                const position_of_P_on_Vertical_axis_Y = circle_center_Y + radius * Math.sin(angle);    
+                const position_of_P_on_Horizontal_axis_X = circle_center_X + radius * Math.cos(angle);
+
+                element_to_animate.style.left = `${position_of_P_on_Horizontal_axis_X}px`;
+                element_to_animate.style.top = `${position_of_P_on_Vertical_axis_Y}px`;
+
+                angle+=0.01; 
+                    if(angle >=2*Math.PI) 
+                        cancelAnimationFrame(draw_full_circle);
+            }
+            
+            ft_set_Point_along_circumference();
+
+        </script>
+</html>
+
+       

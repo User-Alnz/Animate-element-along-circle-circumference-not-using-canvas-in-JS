@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            
+            body{
+                background-color: #1C2833;
+            }
+            .container{
+                display: flex;
+                height: 100vh;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+            #Box{
+                position: relative;
+                height: 500px;
+                width: 500px;
+                background-color: slategray;
+            }
+            #moving_element{
+                position: absolute;
+                height: 20px;
+                width: 20px;
+                background-color: blue;
+                border-radius: 50px;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div class="container">
+
+            <div id="Box">
+                 <div id ="moving_element"></div>
+            </div>
+                        
+        </div>
+       
+    
+        <script>
+            const box = document.getElementById("Box");
+            const element_to_animate = document.getElementById("moving_element");
+            // Source calculate coordinate of point ("P") along circle circumference = >https://gamedev.stackexchange.com/questions/9607/moving-an-object-in-a-circular-path
+            // Source = https://jsfiddle.net/beu63gh5/2/
+
+            // DEFINE CIRCLE DIMENSION !
+            var radius = 150; // radius determine how big the circle will be. int given here will be translate in px lower.
+
+            //DEFINE AXIS
+            const circle_center_Y = box.clientHeight/2; // VERTICAL AXIS - Half of the element selected height in DOM
+            const circle_center_X = box.clientWidth/2; // HORIZONTAL AXIS - Half of the element selected width in DOM
+            
+            let angle = 0; // Angle is fundamental to calculate coordinate of P | look at link cited above & used in function below
+            let has_drawn_full_circle = false;
+            
+            // PROTOTYPE ft_set_Point_along_circumference(var_angle, var_radius, var_circle_center_Y, var_circle_center_X)
+            function ft_set_Point_along_circumference ()
+            {
+                draw_full_circle = requestAnimationFrame(ft_set_Point_along_circumference);
+
+                // The point or coordinate we are calculating is called "P" ! | /!\ IMP to understand -> To do so we use rectangle triandle into circle /!\
+                // P on Vertical  => SinO = Y (perpendicular) / hypothenus (or also radius into circle) | Can also be written this way -> Y = hypothenus * Sin0 (angle°)
+                const position_of_P_on_Vertical_axis_Y = circle_center_Y + radius * Math.sin(angle);    
+                // P on Horizontal => CosO = X (base) / hypothenus(or also radius into circle) | Can also be written this way -> X = hypothenus(or radius) * Cos0 (angle°) 
+                const position_of_P_on_Horizontal_axis_X = circle_center_X + radius * Math.cos(angle);
+
+                // TRANSLATE POSITION INTO CSS STYLE
+                element_to_animate.style.left = `${position_of_P_on_Horizontal_axis_X}px`;
+                element_to_animate.style.top = `${position_of_P_on_Vertical_axis_Y}px`;
+
+                angle+=0.01; //handle speed animation
+
+               //console.log(angle*Math.PI);
+               //console.log(circle_center_X);
+
+               if(angle >=2*Math.PI) // 1 * pi = 180° so => 2 * pi = 360°
+               {
+                /* For perpetual animatiom reset angle to 0 and withdraw cancelAnimationFrame
+                angle=0 */
+                cancelAnimationFrame(draw_full_circle);
+               }
+                
+            }
+                
+            ft_set_Point_along_circumference();
+                  
+        </script>
+    </body>
+</html>
+       
