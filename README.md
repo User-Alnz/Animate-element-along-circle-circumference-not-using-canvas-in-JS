@@ -1,6 +1,6 @@
 ### A few words 
 
-This project has been made to avoid using HTML canvas HTML5 to move an element onto circle circumference.
+This project has been made to avoid using canvas from HTML5 to move an element onto circle circumference.
 Use the code to animate an element in your page to draw a circle with it. 
 
 The method is explained in the following link: https://gamedev.stackexchange.com/questions/9607/moving-an-object-in-a-circular-path
